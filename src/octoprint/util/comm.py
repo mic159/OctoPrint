@@ -1142,7 +1142,7 @@ class MachineCom(object):
 				handled = False
 
 				# process oks
-				if line.startswith("ok") or (self.isPrinting() and supportWait and line == "wait"):
+				if line.startswith("ok") or line.endswith('ok') or (self.isPrinting() and supportWait and line == "wait"):
 					# ok only considered handled if it's alone on the line, might be
 					# a response to an M105 or an M114
 					self._handle_ok()
@@ -1386,7 +1386,7 @@ class MachineCom(object):
 					if "start" in line and not startSeen:
 						startSeen = True
 						self.sayHello()
-					elif line.startswith("ok") or (supportWait and line == "wait"):
+					elif line.startswith("ok") or line.endswith("ok") or (supportWait and line == "wait"):
 						if line == "wait":
 							# if it was a wait we probably missed an ok, so let's simulate that now
 							self._handle_ok()
